@@ -57,8 +57,8 @@ Example response:
 {
   "results": {
     "ONE_TIME_TAXATION": {
-      "items": [
-        {
+      "items": {
+        "COMPREHENSIVE_INCOME_ONLY_TAX": {
           "taxBaseAmount": "¥156,000.00",
           "taxAmount": "¥14,280.00",
           "taxRate": 0.2,
@@ -99,7 +99,7 @@ Example response:
             ]
           }
         },
-        {
+        "ONE_TIME_BONUS_TAX": {
           "taxBaseAmount": "¥300,000.00",
           "taxAmount": "¥58,590.00",
           "taxRate": 0.2,
@@ -130,12 +130,12 @@ Example response:
             ]
           }
         }
-      ],
+      },
       "totalTaxAmount": "¥72,870.00"
     },
     "INTEGRATED_TAXATION": {
-      "items": [
-        {
+      "items": {
+        "COMPREHENSIVE_INCOME_WITH_BONUS_TAX": {
           "taxBaseAmount": "¥456,000.00",
           "taxAmount": "¥83,880.00",
           "taxRate": 0.3,
@@ -180,7 +180,7 @@ Example response:
             ]
           }
         }
-      ],
+      },
       "totalTaxAmount": "¥83,880.00"
     }
   }
