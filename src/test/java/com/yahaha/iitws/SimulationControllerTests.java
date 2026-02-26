@@ -1,4 +1,4 @@
-package com.yahaha.iitds;
+package com.yahaha.iitws;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yahaha.iit.calc.IITRequest;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,5 +64,52 @@ public class SimulationControllerTests {
                 .contains("83,880")
                 .contains("72,870")
                 .contains("traceLog");
+    }
+
+    @Test
+    void when_simulate_without_locale_then_response_should_be_chinese() throws Exception {
+        IITRequest request = new IITRequest();
+        request.setAnnualWageIncome(BigDecimal.valueOf(18000 * 12));
+        request.setAnnualOneTimeBonus(BigDecimal.valueOf(300000));
+
+        String json = objectMapper.writeValueAsString(request);
+
+        MockHttpServletResponse httpResponse = mvc.perform(
+                        post(SimulationController.PATH + "/simulate")
+                                .content(json)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        String responseContent = httpResponse.getContentAsString();
+
+        assertThat(responseContent)
+                .contains("年度综合所得")
+                .doesNotContain("Annual Comprehensive Income");
+    }
+
+    @Test
+    void when_simulate_with_en_us_locale_then_response_should_be_english() throws Exception {
+        IITRequest request = new IITRequest();
+        request.setAnnualWageIncome(BigDecimal.valueOf(18000 * 12));
+        request.setAnnualOneTimeBonus(BigDecimal.valueOf(300000));
+        request.setLocale(Locale.forLanguageTag("en-US"));
+
+        String json = objectMapper.writeValueAsString(request);
+
+        MockHttpServletResponse httpResponse = mvc.perform(
+                        post(SimulationController.PATH + "/simulate")
+                                .content(json)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        String responseContent = httpResponse.getContentAsString();
+
+        assertThat(responseContent)
+                .contains("Annual Comprehensive Income")
+                .doesNotContain("年度综合所得");
     }
 }

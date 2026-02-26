@@ -1,4 +1,4 @@
-package com.yahaha.iitds;
+package com.yahaha.iitws;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

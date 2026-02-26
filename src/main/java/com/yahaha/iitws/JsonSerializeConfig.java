@@ -1,4 +1,4 @@
-package com.yahaha.iitds;
+package com.yahaha.iitws;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
